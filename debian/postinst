@@ -1,0 +1,59 @@
+#!/bin/sh
+
+set -e
+
+# 定义变量
+FONT_ZIP_URL="https://hyperos.mi.com/font-download/MiSans.zip"
+FONT_ZIP="/tmp/MiSans.zip"
+OTF_DIR="/usr/share/fonts/opentype/mi-sans"
+TTF_DIR="/usr/share/fonts/truetype/mi-sans"
+FONT_CACHE_CMD="/usr/bin/fc-cache"
+
+# 创建字体目录（如果不存在）
+mkdir -p "$OTF_DIR" "$TTF_DIR"
+
+# 下载 ZIP 文件
+echo "正在从 ${FONT_ZIP_URL} 下载 MiSans 字体..."
+wget -q -O "$FONT_ZIP" "$FONT_ZIP_URL"
+if [ $? -ne 0 ]; then
+  echo "下载字体 ZIP 文件失败。"
+  exit 1
+fi
+
+# 解压字体
+echo "正在解压字体到 ${OTF_DIR}, ${TTF_DIR}..."
+unzip -q -o "$FONT_ZIP" -d /tmp/MiSans
+if [ $? -ne 0 ]; then
+  echo "解压字体文件失败。"
+  rm -f "$FONT_ZIP"
+  exit 1
+fi
+
+# 复制 OTF 文件
+cp -r /tmp/MiSans/MiSans/otf/*.otf "$OTF_DIR"
+if [ $? -ne 0 ]; then
+  echo "复制 OTF 文件失败。"
+  exit 1
+fi
+
+# 复制 TTF 文件
+cp -r /tmp/MiSans/MiSans/ttf/*.ttf "$TTF_DIR"
+if [ $? -ne 0 ]; then
+  echo "复制 TTF 文件失败。"
+  exit 1
+fi
+
+
+# 清理解压缩文件
+rm -rf /tmp/MiSans
+rm -f "$FONT_ZIP"
+
+# 更新字体缓存
+if [ -x "$FONT_CACHE_CMD" ]; then
+  echo "更新字体缓存..."
+  "$FONT_CACHE_CMD" -f
+fi
+
+echo "MiSans 字体安装成功。"
+
+exit 0
