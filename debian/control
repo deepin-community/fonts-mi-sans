@@ -1,15 +1,16 @@
-Source: template-repository
-Section: unknown
+Source:fonts-mi-sans
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Section: fonts
+Maintainer: xiangzelong <xiangzelong@deepin.org>
+Build-Depends: debhelper-compat (=13),
+Standards-Version: 4.6.2
+Homepage: https://www.deepin.org
+Vcs-Browser: https://github.com/deepin-community/fonts-mi-sans
 
-Package: template-repository
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Package: fonts-mi-sans
+Architecture: all
+Depends: wget, unzip,  ${misc:Depends}
+Description: Mi Sans font.
+ MiSans Global is a global language font customization project led by Xiaomi and co-created with Mona font and Han Yi font.
+ .
+ This package contains the Mi Sans font.

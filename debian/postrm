@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+# 定义变量
+OTF_DIR="/usr/share/fonts/opentype/mi-sans"
+TTF_DIR="/usr/share/fonts/truetype/mi-sans"
+FONT_CACHE_CMD="/usr/bin/fc-cache"
+
+# 删除字体文件
+if [ -d "$OTF_DIR" ]; then
+  echo "移除 ${OTF_DIR} 中的 MiSans 字体..."
+  rm -rf "$OTF_DIR"
+fi
+
+if [ -d "$TTF_DIR" ]; then
+  echo "移除 ${TTF_DIR} 中的 MiSans 字体..."
+  rm -rf "$TTF_DIR"
+fi
+
+# 更新字体缓存
+if [ -x "$FONT_CACHE_CMD" ]; then
+  echo "更新字体缓存..."
+  "$FONT_CACHE_CMD" -f
+fi
+
+echo "MiSans 字体卸载成功。"
+
+exit 0
